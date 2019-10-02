@@ -1,5 +1,5 @@
 
-## Simon Says - Built With React Native
+## Simon Says - React Native App
 A simple "Simon Says" game
 
 ### Game screen:
