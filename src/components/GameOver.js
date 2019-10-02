@@ -18,9 +18,10 @@ class GameOver extends Component {
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                 <Text style={{ color: "white" , marginTop: 250, fontSize: 50 }}>Game Over</Text>
                 <Text style={{ color: "white" , fontSize: 30, marginTop: 20 }}>SCORE: {this.props.score}</Text>
+                <Text style={{ color: "white" , fontSize: 30, marginTop: 20 }}>HIGH SCORE: {this.props.bestScore}</Text>
 
 
-                <View style={{ marginTop: 270, borderWidth: 2,
+                <View style={{ marginTop: 200, borderWidth: 2,
                     borderColor: 'black', backgroundColor: "#ffffff96", borderRadius: 20, width: 270 }}>
                     <Button onPress={this.startNewGame} title="New Game" color="black"></Button>
                 </View>

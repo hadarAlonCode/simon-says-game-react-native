@@ -4,14 +4,6 @@ import Game from './src/components/Game';
 import GameOver from './src/components/GameOver';
 import backgroundImage from "./src/images/background.jpg";
 
-// import Sound from 'react-native-sound';
-
-// import sound1 from "./src/sounds/sound1.mp3"
-// import sound2 from "./src/sounds/sound2.mp3"
-// import sound3 from "./src/sounds/sound3.mp3"
-// import sound4 from "./src/sounds/sound4.mp3"
-
-
 
 class App extends Component {
   constructor() {
@@ -57,7 +49,7 @@ class App extends Component {
 
       })
 
-      setTimeout( async () => {
+      setTimeout(async () => {
         await this.setState({ flickerColor: 0 }, function () {
 
         });
@@ -69,7 +61,7 @@ class App extends Component {
 
         clearInterval(this.intervalId);
         setTimeout(() => this.setState({ flickerColor: 0, stopPressButtons: true }, function () {
-          
+
         }), 500);
       }
 
@@ -125,26 +117,32 @@ class App extends Component {
   startNewGame = () => {
     this.setState({
       gameOver: false,
-      score: 0
+      score: 0,
+
     })
+
+    if (this.state.bestScore < this.state.score) {
+        this.setState({
+        bestScore: this.state.score
+      })
+    }
+
   }
-
-
 
 
   render() {
 
     return (
 
-// GameOver Screen
+      // GameOver Screen
       this.state.gameOver ?
         <ImageBackground source={backgroundImage} style={{ width: '100%', height: '100%' }}>
-          <GameOver score={this.state.score} playTheGame={this.playTheGame} startNewGame={this.startNewGame} />
+          <GameOver score={this.state.score} playTheGame={this.playTheGame} startNewGame={this.startNewGame} bestScore={this.state.bestScore} />
         </ImageBackground>
 
         :
 
-// Game Screen
+        // Game Screen
         <ImageBackground source={backgroundImage} style={{ width: '100%', height: '100%' }}>
           <View style={{ justifyContent: 'center', flex: 1 }}>
 
@@ -158,7 +156,7 @@ class App extends Component {
             </View>
 
 
-{/*Play Button */}
+            {/*Play Button */}
             {!this.state.gameSequence.length ?
               <View style={{
                 marginBottom: 60, marginLeft: 70, borderWidth: 2,
