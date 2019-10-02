@@ -7,6 +7,7 @@ class Buttons extends Component {
 
     userClick = () => {
         this.props.userPlay(this.props.button.id)
+        
     }
 
 
@@ -15,7 +16,7 @@ class Buttons extends Component {
         return (
 
             <View  >
-                <TouchableOpacity onPress={this.userClick} style={{
+                <TouchableOpacity  onPress={this.props.stopPressButtons ? null :  this.userClick } style={{
                     backgroundColor: this.props.flickerColor === this.props.button.id ?
                         this.props.button.color2 :
                         this.props.button.color,

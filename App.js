@@ -21,25 +21,25 @@ class App extends Component {
       gameSequence: [],
       playerSequence: [],
       flickerColor: 0,
-      level: 1,
       score: 0,
       bestScore: 0,
       clickNumber: 0,
-      gameOver: false
+      gameOver: false,
+      stopPressButtons: true
     }
   }
 
 
-
-
-  //Push new color into the game's color array
+  // Push new color into the game's color array
   playTheGame = async () => {
-    for (let i = 0; i < 1; i++) {
-      let color = this.state.buttons[Math.floor(Math.random() * this.state.buttons.length)];
-      tempGameSequence = [...this.state.gameSequence]
-      tempGameSequence.push(color.id)
-      console.log(tempGameSequence);
-    }
+
+    await this.setState({ stopPressButtons: true }, function () {
+
+    })
+    let color = this.state.buttons[Math.floor(Math.random() * this.state.buttons.length)];
+    tempGameSequence = [...this.state.gameSequence]
+    tempGameSequence.push(color.id)
+
 
     await this.setState({
       gameSequence: tempGameSequence
@@ -51,34 +51,37 @@ class App extends Component {
 
   playTheSequence = async () => {
     var i = 0;
+
     this.intervalId = setInterval(async () => {
       await this.setState({ flickerColor: this.state.gameSequence[i] }, function () {
-        console.log(this.state.flickerColor);
+
       })
 
-      setTimeout(async () => {
+      setTimeout( async () => {
         await this.setState({ flickerColor: 0 }, function () {
-          console.log(this.state.flickerColor);
-        });
 
+        });
       }, 500);
 
       i++;
 
       if (i >= this.state.gameSequence.length) {
+
         clearInterval(this.intervalId);
-        setTimeout(() => this.setState({ flickerColor: 0 }), 1000);
+        setTimeout(() => this.setState({ flickerColor: 0, stopPressButtons: false }, function () {
+          
+        }), 500);
       }
+
     }, 1000);
+
+
   }
 
 
   userPlay = async (id) => {
 
-    console.log(id);
-
     if (id === this.state.gameSequence[this.state.clickNumber]) {
-      console.log('Good Move');
 
       let tempPlayerSequence = [...this.state.playerSequence]
       tempPlayerSequence.push(id)
@@ -86,6 +89,8 @@ class App extends Component {
       await this.setState({
         playerSequence: tempPlayerSequence
       })
+
+
 
       if (JSON.stringify(this.state.playerSequence) === JSON.stringify(this.state.gameSequence)) {
 
@@ -99,26 +104,22 @@ class App extends Component {
 
       } else {
 
-        this.setState({
-          clickNumber: this.state.clickNumber + 1
-        })
-
+        return (
+          this.setState({
+            clickNumber: this.state.clickNumber + 1
+          })
+        )
       }
 
 
     } else {
-      //  alert("Game Over")
-      console.log('game over')
       this.setState({
         gameSequence: [],
         playerSequence: [],
         gameOver: true,
-
-
+        clickNumber: 0
       })
-
     }
-
   }
 
   startNewGame = () => {
@@ -135,7 +136,7 @@ class App extends Component {
 
     return (
 
-
+// GameOver Screen
       this.state.gameOver ?
         <ImageBackground source={backgroundImage} style={{ width: '100%', height: '100%' }}>
           <GameOver score={this.state.score} playTheGame={this.playTheGame} startNewGame={this.startNewGame} />
@@ -143,30 +144,29 @@ class App extends Component {
 
         :
 
+// Game Screen
         <ImageBackground source={backgroundImage} style={{ width: '100%', height: '100%' }}>
-
           <View style={{ justifyContent: 'center', flex: 1 }}>
 
-
-            <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1}}>
+            <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
               <Text style={{ marginBottom: 20, fontSize: 40, color: "white" }}>Simon Says</Text>
               <Text style={{ marginTop: 5, fontSize: 25, color: "white" }}>Score: {this.state.score ? this.state.score : 0} </Text>
-
             </View>
 
             <View style={{ alignItems: 'center', flex: 2 }}>
-              <Game buttons={this.state.buttons} flickerColor={this.state.flickerColor} userPlay={this.userPlay} />
+              <Game buttons={this.state.buttons} flickerColor={this.state.flickerColor} userPlay={this.userPlay} stopPressButtons={this.state.stopPressButtons} gameSequence={this.state.gameSequence} />
             </View>
 
-            {!this.state.gameSequence.length ? 
-            <View style={{
-              marginBottom: 60, marginLeft: 70, borderWidth: 2,
-              borderColor: 'black', backgroundColor: "#ffffff96", borderRadius: 20, width: 270
-            }}>
 
-              <Button onPress={this.playTheGame} title="Play" color="black"  ></Button>
-            </View>
-            : null}
+{/*Play Button */}
+            {!this.state.gameSequence.length ?
+              <View style={{
+                marginBottom: 60, marginLeft: 70, borderWidth: 2,
+                borderColor: 'black', backgroundColor: "#ffffff96", borderRadius: 20, width: 270
+              }}>
+                <Button onPress={this.playTheGame} title="Play" color="black"  ></Button>
+              </View>
+              : null}
 
           </View>
         </ImageBackground>

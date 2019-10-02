@@ -8,7 +8,7 @@ class Game extends Component {
         return (
             <View style={{flexWrap: 'wrap', width:270, height:270, borderRadius: 20}}>
                 <View style={{flexWrap: 'wrap', marginLeft:20, marginTop:15 }}>
-                {this.props.buttons.map(b=> <Buttons key={b.id} button={b} flickerColor={this.props.flickerColor} userPlay={this.props.userPlay}/>)}
+                {this.props.buttons.map(b=> <Buttons key={b.id} button={b} flickerColor={this.props.flickerColor} userPlay={this.props.userPlay} stopPressButtons={this.props.stopPressButtons} gameSequence={this.props.gameSequence}/>)}
                 </View>
             </View>
         );
