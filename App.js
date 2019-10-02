@@ -63,7 +63,7 @@ class App extends Component {
 
       this.playSound(this.state.buttons[this.state.gameSequence[i] - 1].sound)
 
-      setTimeout(async () => {
+      setTimeout( async () => {
         await this.setState({ flickerColor: 0 });
       }, 500);
 

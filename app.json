@@ -5,7 +5,7 @@
     "privacy": "public",
     "sdkVersion": "35.0.0",
     "android": {
-      "package": "com.hadaralon.simonGame"
+      "package": "com.yourcompany.yourappname"
     },
     "platforms": [
       "ios",
@@ -27,7 +27,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.yourcompany.yourappname"
     }
   }
 }
