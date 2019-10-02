@@ -129,6 +129,13 @@ class App extends Component {
 
 
     } else {
+
+      if (this.state.bestScore < this.state.score) {
+        this.setState({
+          bestScore: this.state.score
+        })
+      }
+      
       this.setState({
         gameSequence: [],
         playerSequence: [],
@@ -139,17 +146,16 @@ class App extends Component {
   }
 
   startNewGame = () => {
+
+    
+
     this.setState({
       gameOver: false,
       score: 0,
 
     })
 
-    if (this.state.bestScore < this.state.score) {
-      this.setState({
-        bestScore: this.state.score
-      })
-    }
+    
 
   }
 
