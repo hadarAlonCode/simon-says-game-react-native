@@ -25,7 +25,7 @@ class App extends Component {
       bestScore: 0,
       clickNumber: 0,
       gameOver: false,
-      stopPressButtons: true
+      stopPressButtons: false
     }
   }
 
@@ -33,7 +33,7 @@ class App extends Component {
   // Push new color into the game's color array
   playTheGame = async () => {
 
-    await this.setState({ stopPressButtons: true }, function () {
+    await this.setState({ stopPressButtons: false }, function () {
 
     })
     let color = this.state.buttons[Math.floor(Math.random() * this.state.buttons.length)];
@@ -68,7 +68,7 @@ class App extends Component {
       if (i >= this.state.gameSequence.length) {
 
         clearInterval(this.intervalId);
-        setTimeout(() => this.setState({ flickerColor: 0, stopPressButtons: false }, function () {
+        setTimeout(() => this.setState({ flickerColor: 0, stopPressButtons: true }, function () {
           
         }), 500);
       }
