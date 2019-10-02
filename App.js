@@ -10,8 +10,6 @@ import sound3 from "./src/sounds/sound3.mp3"
 import sound4 from "./src/sounds/sound4.mp3"
 
 
-
-
 class App extends Component {
   constructor() {
     super()
@@ -31,20 +29,16 @@ class App extends Component {
   playSound = async (sound) => {
     this.backgroundMusic = new Audio.Sound();
     try {
-      await this.backgroundMusic.loadAsync(
-        sound
-      )
+      await this.backgroundMusic.loadAsync(sound)
       await this.backgroundMusic.setIsLoopingAsync(false);
       await this.backgroundMusic.playAsync();
-      // Your sound is playing!
     } catch (error) {
-      // An error occurred!
 
     }
   }
 
 
-  // Push new color into the game's color array
+  // Push new color into the game sequence
   playTheGame = async () => {
 
     await this.setState({ stopPressButtons: false }, function () {
@@ -54,29 +48,23 @@ class App extends Component {
     tempGameSequence = [...this.state.gameSequence]
     tempGameSequence.push(color.id)
 
-
     await this.setState({
       gameSequence: tempGameSequence
     })
-
     this.playTheSequence()
   }
 
 
+
   playTheSequence = async () => {
     var i = 0;
-
     this.intervalId = setInterval(async () => {
-      await this.setState({ flickerColor: this.state.gameSequence[i] }, function () {
-
-      })
+      await this.setState({ flickerColor: this.state.gameSequence[i]})
 
       this.playSound(this.state.buttons[this.state.gameSequence[i] - 1].sound)
 
       setTimeout(async () => {
-        await this.setState({ flickerColor: 0 }, function () {
-
-        });
+        await this.setState({ flickerColor: 0 });
       }, 500);
 
       i++;
@@ -84,9 +72,7 @@ class App extends Component {
       if (i >= this.state.gameSequence.length) {
 
         clearInterval(this.intervalId);
-        setTimeout(() => this.setState({ flickerColor: 0, stopPressButtons: true }, function () {
-
-        }), 500);
+        setTimeout(() => this.setState({ flickerColor: 0, stopPressButtons: true }), 500);
       }
 
     }, 1000);
@@ -98,15 +84,12 @@ class App extends Component {
   userPlay = async (id) => {
 
     if (id === this.state.gameSequence[this.state.clickNumber]) {
-
       let tempPlayerSequence = [...this.state.playerSequence]
       tempPlayerSequence.push(id)
 
       await this.setState({
         playerSequence: tempPlayerSequence
       })
-
-
 
       if (JSON.stringify(this.state.playerSequence) === JSON.stringify(this.state.gameSequence)) {
 
@@ -126,8 +109,6 @@ class App extends Component {
           })
         )
       }
-
-
     } else {
 
       if (this.state.bestScore < this.state.score) {
@@ -135,7 +116,7 @@ class App extends Component {
           bestScore: this.state.score
         })
       }
-      
+
       this.setState({
         gameSequence: [],
         playerSequence: [],
@@ -146,16 +127,10 @@ class App extends Component {
   }
 
   startNewGame = () => {
-
-    
-
     this.setState({
       gameOver: false,
-      score: 0,
-
-    })
-
-    
+      score: 0
+    })  
 
   }
 
