@@ -3,13 +3,20 @@ import React, { Component } from 'react';
 import Game from './src/components/Game';
 import GameOver from './src/components/GameOver';
 import backgroundImage from "./src/images/background.jpg";
+import { Audio } from 'expo-av';
+import sound1 from "./src/sounds/sound1.mp3"
+import sound2 from "./src/sounds/sound2.mp3"
+import sound3 from "./src/sounds/sound3.mp3"
+import sound4 from "./src/sounds/sound4.mp3"
+
+
 
 
 class App extends Component {
   constructor() {
     super()
     this.state = {
-      buttons: [{ color: "#a286d5ad", color2: "#7138d7", id: 1 }, { color: "#5368dfba", color2: "#0026fe", id: 2 }, { color: "#0ae9ffa3", color2: "#2ff3ff", id: 3 }, { color: "#befeb3ad", color2: "#19ff0a", id: 4 }],
+      buttons: [{ color: "#a286d5ad", color2: "#7138d7", id: 1, sound: sound1 }, { color: "#5368dfba", color2: "#0026fe", id: 2, sound: sound2 }, { color: "#0ae9ffa3", color2: "#2ff3ff", id: 3, sound: sound3 }, { color: "#befeb3ad", color2: "#19ff0a", id: 4, sound: sound4 }],
       gameSequence: [],
       playerSequence: [],
       flickerColor: 0,
@@ -18,6 +25,21 @@ class App extends Component {
       clickNumber: 0,
       gameOver: false,
       stopPressButtons: false
+    }
+  }
+
+  playSound = async (sound) => {
+    this.backgroundMusic = new Audio.Sound();
+    try {
+      await this.backgroundMusic.loadAsync(
+        sound
+      )
+      await this.backgroundMusic.setIsLoopingAsync(false);
+      await this.backgroundMusic.playAsync();
+      // Your sound is playing!
+    } catch (error) {
+      // An error occurred!
+
     }
   }
 
@@ -48,6 +70,8 @@ class App extends Component {
       await this.setState({ flickerColor: this.state.gameSequence[i] }, function () {
 
       })
+
+      this.playSound(this.state.buttons[this.state.gameSequence[i] - 1].sound)
 
       setTimeout(async () => {
         await this.setState({ flickerColor: 0 }, function () {
@@ -122,7 +146,7 @@ class App extends Component {
     })
 
     if (this.state.bestScore < this.state.score) {
-        this.setState({
+      this.setState({
         bestScore: this.state.score
       })
     }
@@ -152,7 +176,7 @@ class App extends Component {
             </View>
 
             <View style={{ alignItems: 'center', flex: 2 }}>
-              <Game buttons={this.state.buttons} flickerColor={this.state.flickerColor} userPlay={this.userPlay} stopPressButtons={this.state.stopPressButtons} gameSequence={this.state.gameSequence} />
+              <Game buttons={this.state.buttons} flickerColor={this.state.flickerColor} userPlay={this.userPlay} stopPressButtons={this.state.stopPressButtons} gameSequence={this.state.gameSequence} playSound={this.playSound} />
             </View>
 
 

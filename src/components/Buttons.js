@@ -6,7 +6,8 @@ class Buttons extends Component {
 
 
     userClick = () => {
-        this.props.userPlay(this.props.button.id)        
+        this.props.userPlay(this.props.button.id)
+        this.props.playSound(this.props.button.sound)        
     }
 
 

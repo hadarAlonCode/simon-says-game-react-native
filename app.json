@@ -4,6 +4,9 @@
     "slug": "simonSays",
     "privacy": "public",
     "sdkVersion": "35.0.0",
+    "android": {
+      "package": "com.hadaralon.simonGame"
+    },
     "platforms": [
       "ios",
       "android",
